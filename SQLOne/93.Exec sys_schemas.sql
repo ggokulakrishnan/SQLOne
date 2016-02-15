@@ -316,6 +316,24 @@ GO
 --TableName Type Desc   Schema Name
 --SchTable  USER_TABLE  SalesTrans
 
+--01. List all the objects in a given schema
+
+--A. Schema is a container
+--B. To list all the objects stored in a given schema use sys.objects
+--C. List all the objects that are in schema (a) Sales, (b) SalesTrans and (c) dbo
+ 
+ SELECT * FROM sys.objects
+ SELECT * FROM sys.schemas
+
+ SELECT	o.name, o.schema_id, o.type_desc, s.name
+ FROM	sys.objects o, sys.schemas s
+ WHERE	o.schema_id	= s.schema_id
+	AND	s.name IN ('Sales', 'SalesTrans', 'dbo');
+GO
+
+--01. Default schema for logged in session
+
+
  
 CREATE TABLE [Sales].[SalesOrderHeader](
       [SalesOrderID] [int] IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,
@@ -368,3 +386,8 @@ Schema: http://dba.fyicenter.com/faq/sql_server_2/Transferring_Tables_from_One_S
 Mitigation and Contingency: http://www.differencebetween.com/difference-between-mitigation-and-vs-contingency/
 							http://www.izenbridge.com/blog/know-the-difference-between-mitigation-plan-and-contingency-plan/
 */
+
+--Error Handling: http://www.aspdotnet-suresh.com/2013/03/exception-handling-in-sql-server-stored.html
+--					https://www.simple-talk.com/sql/database-administration/handling-errors-in-sql-server-2012/
+-- Error Handling Trans: http://www.sommarskog.se/error_handling/Part1.html
+-- Error Handling in SP: http://sqlhints.com/2014/01/25/exception-handling-template-for-stored-procedure-in-sql-server/
