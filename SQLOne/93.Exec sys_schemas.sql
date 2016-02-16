@@ -1,7 +1,8 @@
 --													Sri Krishnarpanam
  
 --Understanding "sys.schemas"
- 
+--Link: http://dba.fyicenter.com/faq/sql_server_2/Transferring_Tables_from_One_Schema_to_Another.html 
+
 --Create a database specifying Primary and Transaction Log files
 USE master;
 GO
@@ -45,20 +46,22 @@ USE master;
 GO
 
 IF DB_ID(N'SQLOneSchemaDB') IS NOT NULL
-BEGIN TRY
-	DROP DATABASE SQLOneSchemaDB;
-	PRINT 'SQLOneSchemaDB is present in this SQL Instance and it is deleted successfully';
-END TRY
-BEGIN CATCH	
-	PRINT 'Error deleting SQLOneSchemaDB, below could be the possible reasons ...';
-	PRINT 'ErrorNumber = '		+ CONVERT(VARCHAR(10), ISNULL(ERROR_NUMBER(), '')) +
-		  ', ErrorSeverity = '	+ CONVERT(VARCHAR(10), ISNULL(ERROR_SEVERITY(), '')) + 
-		  ', ErrorState = '		+ CONVERT(VARCHAR(10), ISNULL(ERROR_STATE(), '')) +
-		  ', ErrorProcedure = ' + CONVERT(VARCHAR(50), ISNULL(ERROR_PROCEDURE(), 'N/A')) +
-		  ', ErrorLine = '		+ CONVERT(VARCHAR(10), ISNULL(ERROR_LINE(), '')) +
-		  CHAR(13) + CHAR(10) +
-		  'ErrorMessage = '	+ CONVERT(VARCHAR(99), ISNULL(ERROR_MESSAGE(), ''));
-END CATCH
+	BEGIN TRY
+		DROP DATABASE SQLOneSchemaDB;
+		PRINT 'SQLOneSchemaDB is present in this SQL Instance and it is deleted successfully';
+	END TRY
+	BEGIN CATCH	
+		PRINT 'Error deleting SQLOneSchemaDB, below could be the possible reasons ...';
+		PRINT 'ErrorNumber = '		+ CONVERT(VARCHAR(10), ISNULL(ERROR_NUMBER(), '')) +
+			  ', ErrorSeverity = '	+ CONVERT(VARCHAR(10), ISNULL(ERROR_SEVERITY(), '')) + 
+			  ', ErrorState = '		+ CONVERT(VARCHAR(10), ISNULL(ERROR_STATE(), '')) +
+			  ', ErrorProcedure = ' + CONVERT(VARCHAR(50), ISNULL(ERROR_PROCEDURE(), 'N/A')) +
+			  ', ErrorLine = '		+ CONVERT(VARCHAR(10), ISNULL(ERROR_LINE(), '')) +
+			  CHAR(13) + CHAR(10) +
+			  'ErrorMessage = '	+ CONVERT(VARCHAR(99), ISNULL(ERROR_MESSAGE(), ''));
+	END CATCH
+ELSE
+	PRINT 'Database SQLOneSchemaDB is not present in this SQL Instance';
 GO
  
 USE SQLOneSchemaDB;
@@ -166,7 +169,7 @@ SELECT * FROM dbo.Employee (NoLock);
 --          (a) Sales.SalesPerson
 --          (b) Sales.SalesOrderHeader
  
---01(A). Create a new schema in database 'SQLOneSchemaDB' with the name 'Sales'
+--(A). Create a new schema in database 'SQLOneSchemaDB' with the name 'Sales'
 USE SQLOneSchemaDB;
 GO
  
@@ -260,7 +263,7 @@ GO
 --04. Use ALTER SCHEMA.. TRANSFER ..
 --05. Table 'SchTable' has moved from 'Sales' schema to the new schema 'SalesTrans'
  
---01. Check if database has a schema with the same name which we are planning to create
+--B. Check if database has a schema with the same name which we are planning to create
 USE SQLOneSchemaDB;
 GO
  
@@ -279,11 +282,11 @@ GO
 CREATE SCHEMA SalesTrans;
 GO
  
- --01. This will list all the schemas that are in database 'SQLOneSchemaDB'
+ --C. This will list all the schemas that are in database 'SQLOneSchemaDB'
 SELECT * FROM sys.schemas;
 GO
  
---01. List all the table in schemas 'Sales' & 'SalesTrans'
+--D. List all the table in schemas 'Sales' & 'SalesTrans'
 SELECT	st.name [TableName], st.type_desc [Type Desc], ss.name [Schema Name]
 FROM	sys.tables st, sys.schemas ss
 WHERE	st.schema_id = ss.schema_id
@@ -294,7 +297,7 @@ GO
 --TableName Type Desc   Schema Name
 --SchTable  USER_TABLE  Sales
  
---01. Move the table 'SchTable' to new schema 'SalesTrans'
+--E. Move the table 'SchTable' to new schema 'SalesTrans'
  
 USE SQLOneSchemaDB;
 GO
@@ -305,7 +308,7 @@ GO
 USE SQLOneSchemaDB;
 GO
  
---01. List all the table in schemas 'Sales' & 'SalesTrans'
+--F. List all the table in schemas 'Sales' & 'SalesTrans'
 SELECT  st.name [TableName], st.type_desc [Type Desc], ss.name [Schema Name]
 FROM	sys.tables st, sys.schemas ss
 WHERE	st.schema_id = ss.schema_id
@@ -316,7 +319,7 @@ GO
 --TableName Type Desc   Schema Name
 --SchTable  USER_TABLE  SalesTrans
 
---01. List all the objects in a given schema
+--G. List all the objects in a given schema
 
 --A. Schema is a container
 --B. To list all the objects stored in a given schema use sys.objects
@@ -331,8 +334,250 @@ GO
 	AND	s.name IN ('Sales', 'SalesTrans', 'dbo');
 GO
 
---01. Default schema for logged in session
+--H. Default schema for logged in session
 
+--01. When a user login to a SQL Server and selects a database SQL Server will assign a default schema to the logged in session
+--02. Schema name can be omitted when we refer an object in default schema
+
+--More about default schema:
+
+--A. The default schema for the logged in session for the selected database is assigned based on database level principle 
+--		database user
+--B. If user is referring to an object in default schema, there is no need to specify the schema name
+--C. If user is referring to an object outside the schema, user must specify the schema name
+
+--Verify your default schema
+
+USE master;	-- [master] is where all the SQL Server logins are stored
+GO
+
+--01. Create a new login called 'fooLogin' that uses SQL Server Authentication for login mechanism 
+--		this login starts with password 'Baz1nga' but the password must be changed after the first login
+--		the option MUST_CHANGE option cannot be used when CHECK_EXPIRATION is OFF
+--		If CHECK_EXPIRATION is ON then CREATE LOGIN would raise an error
+CREATE LOGIN fooLogin 
+   WITH PASSWORD = 'Baz1nga' MUST_CHANGE,
+   CHECK_EXPIRATION = ON;
+GO
+--OP: Command(s) completed successfully.
+
+USE master;
+GO
+
+DROP LOGIN fooLogin;
+GO
+
+--OP: (If login does not exists in this instance)
+--Msg 15151, Level 16, State 1, Line 1
+--Cannot drop the login 'fooLogin', because it does not exist or you do not have permission.
+
+--(Or)
+
+DECLARE @return INT;
+Exec @return = sp_droplogin fooLogin;
+PRINT @return;
+GO
+
+--OP: (When login 'fooLogin' exists in the instance)
+--Command(s) completed successfully. (Or)
+--0
+
+--OP: (If login does not exists in this instance)
+--Msg 15007, Level 16, State 1, Procedure sp_droplogin, Line 26
+--'fooLogin' is not a valid login or you do not have permission.
+--1
+
+--01. 'sp_droplogin' internally called DROP LOGIN
+--02. 'sp_droplogin' cannot be called with in a user-defined transaction
+--03. It always returns an interger as output (0 for Success) and (1 for Failure) 
+
+--Now only a LOGIN is create with the name 'fooLogin' this login will not have access to any database
+--	After the login is created, the login can connect to SQL Server it will not have sufficient permission to 
+--	perform any useful work
+
+--01. Now add SQL Server login 'fooLogin' to Database 'SQLOneSchemaDB' as user 'fooUser', this user 'fooUser' can now 
+--		be added to any server role
+
+--Link: https://msdn.microsoft.com/en-IN/library/ms187750.aspx
+
+USE SQLOneSchemaDB;
+GO
+
+CREATE USER fooUser FOR LOGIN fooLogin;
+GO
+
+--01. Adding database user to a role
+
+SELECT * FROM sys.database_role_members -- role_principle_id (16384), member_principle_id (1)
+SELECT * FROM sys.database_principals	-- 
+
+SELECT		*
+FROM		sys.database_role_members rm, sys.database_principals p
+WHERE		p.principal_id = rm.role_principal_id
+	AND		p.owning_principal_id = rm.member_principal_id	
+
+SELECT * FROM sys.fn_builtin_permissions('SERVER') ORDER BY permission_name;
+
+--Link: https://msdn.microsoft.com/en-us/library/ms188659.aspx
+
+--01. List all Server roles (Returns list of server level roles)
+Exec sp_helpsrvrole				--ServerRole, Description
+
+--02. Return information about the members who are in server role
+Exec sp_helpsrvrolemember		-- ServerRole, MemberName, MemberSID
+
+--03. Displays all the permission of server level role
+Exec sp_srvrolepermission		-- ServerRole, Permission
+
+--04. Indicates whether SQL Login is a member of specified server-level role
+--		Return Type: 
+--		0 - Login is not a member of role
+--		1 - Login is member of role
+--	 NULL - role or login is not valid, or you do not have permission to view the role	
+
+SELECT USER_ID()				--OP: 1
+SELECT USER_NAME(USER_ID())		--OP: dbo
+SELECT SUSER_NAME(USER_ID())	--OP: sa
+SELECT SUSER_SNAME(USER_SID())	--OP: Vinayagar\Maruthi
+SELECT USER_SID()				--OP: 0x0105000000000005150000007FC0B41011F5B931957D3535E8030000
+SELECT SUSER_ID()				--OP: 259
+SELECT SUSER_SID()				--OP: 0x0105000000000005150000007FC0B41011F5B931957D3535E8030000
+
+SELECT IS_SRVROLEMEMBER ('sysadmin')								--OP: 1 Logged in user 'Vinayagar\Maruthi' is of Server role 'sysadmin'
+SELECT IS_SRVROLEMEMBER ('sysadmin', SUSER_SNAME(USER_SID()))		--OP: 1 Logged in user 'Vinayagar\Maruthi' is of Server role 'sysadmin'
+SELECT IS_SRVROLEMEMBER ('sysadmin', SUSER_SNAME(USER_SID()))		--OP: 1 Logged in user 'Vinayagar\Maruthi' is of Server role 'sysadmin'
+SELECT IS_SRVROLEMEMBER ('sysadmin', N'Vinayagar\Maruthi')			--OP: 1 Logged in user 'Vinayagar\Maruthi' is of Server role 'sysadmin'
+
+--05. 'sys.server_role_members' one row is returned for each memeber of each server-level role
+SELECT * FROM sys.server_role_members 
+
+--06. Add login as a member of server role (sp_addsrvrolemember) THIS IS DEPRECIATED
+--		Use 'ALTER SERVER ROLE' instead
+--		Adding SQL Server login 'fooLogin' to 'sysadmin' fixed server role
+--		A. When a login is added to a fixed server role the login gains permission associated with the role
+--		B. 'sp_addrolemember' is used to add a login to fixed database or user-defined role
+--		C. Return Code (0 - Success) and (1 - Failure)
+ 
+Exec sp_addrolemember 'fooLogin', 'sysadmin';
+GO
+
+--07. Removes Windows, SQL Server Login or Group from Server-Level roles (sp_dropsrvrolemember) THIS IS DEPRECIATED
+--		Use 'ALTER SERVER ROLE' instead
+--		A. Removes login 'fooLogin' from 'sysadmin' fixed server role
+--		B. Return (0 - Success) and (1 - Failure)
+
+Exec sp_dropsrvrolemember 'fooLogin', 'sysadmin';
+GO
+
+--08. 'CREATE SERVER ROLE' creates a new user defined server rol
+--		A. Creating a new server role 'csrSvrRole' that is owned by a login 'fooLogin'
+USE master;
+GO
+
+CREATE SERVER ROLE csrSvrRole AUTHORIZATION fooLogin;
+GO
+
+--		B. Creating a new server role 'csrRole' that is owned by a fixed server role
+USE master;
+GO
+
+CREATE SERVER ROLE audSvrRole AUTHORIZATION sysadmin;
+GO
+
+--09. 'ALTER SERVER ROLE' changes the membership of a server role or changes name of user-defined server role
+--		A. Create a new server role with the name 'prdSvrRole'
+--		B. Change the name of the server role form 'prdSvrRole' to 'prodSvrRole'
+--		C. Adding a SQL login to Server Role
+--		D. 
+
+USE master;
+GO
+
+CREATE SERVER ROLE prdSvrRole;
+GO
+
+USE master;
+GO
+
+ALTER SERVER ROLE prdSvrRole WITH NAME = prodSvrRole;
+GO
+
+--01. Adding SQL Server login named 'fooLogin' to 'sysadmin' fixed server role
+ALTER SERVER ROLE sysadmin ADD MEMBER fooLogin;
+GO
+
+--02. Removing SQL Server login name 'fooLogin' from fixed server role
+ALTER SERVER ROLE sysadmin DROP MEMBER fooLogin;
+GO
+
+--03. GRANT login permission to add logins to user-defined server role
+GRANT ALTER ON SERVER ROLE :: prodSvrRole TO fooLogin;
+GO
+
+--10. Remove user defined Server Role
+
+USE master;
+GO
+
+DROP SERVER ROLE prodSvrRole;
+GO
+
+DROP SERVER ROLE audSvrRole;
+GO
+
+DROP SERVER ROLE csrSvrRole;
+GO
+
+SELECT	SP1.name AS RoleOwner, SP2.name AS ServerRole
+FROM	sys.server_principals AS SP1
+JOIN	sys.server_principals AS SP2
+    ON SP1.principal_id = SP2.owning_principal_id 
+ORDER BY SP1.name ;
+
+--11. 'IS_SRVROLEMEMBER' determine membership of server role
+--		Resultset:	0 - Login is not a member of role
+--					1 - Login is member of role
+--				 NULL - role or login is not valid or you do not have permission to view role membership
+
+SELECT IS_SRVROLEMEMBER('sysadmin', 'fooLogin');		--OP: 0 (Login not a member of role)
+SELECT IS_SRVROLEMEMBER('sysadmin');					--OP: 1 (Login 'Vinayagar\Maruthi' is member of sysadmin role)
+
+--B. Database user creation
+
+USE master;	-- [master] is where all the SQL Server logins are stored
+GO
+
+--01. Create a new login called 'fooLogin' that uses SQL Server Authentication for login mechanism 
+--		this login starts with password 'Baz1nga' but the password must be changed after the first login
+--		the option MUST_CHANGE option cannot be used when CHECK_EXPIRATION is OFF
+--		If CHECK_EXPIRATION is ON then CREATE LOGIN would raise an error
+CREATE LOGIN fooLogin 
+   WITH PASSWORD = 'Baz1nga' MUST_CHANGE,
+   CHECK_EXPIRATION = ON;
+GO
+
+--02. Create a database user 'fooUser' for the login 'fooLogin' created above
+USE master;
+GO
+
+CREATE USER fooUser FOR LOGIN fooLogin;
+GO
+
+
+
+
+--01. Change the database context to 'SQLOneSchemaDB'
+USE SQLOneSchemaDB;
+GO
+
+PRINT USER_NAME();
+GO
+--OP:
+--dbo
+
+SELECT		name, default_schema_name, type
+FROM		sys.database_principals
+WHERE		type = 'S'
 
  
 CREATE TABLE [Sales].[SalesOrderHeader](
