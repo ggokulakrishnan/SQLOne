@@ -3,6 +3,18 @@
   <Items>
     <LogicalFolder Name="Connections" Type="2" Sorted="true">
       <Items>
+        <ConnectionNode Name="VINAYAGAR:lgnBOB">
+          <Created>2016-02-22T14:15:40.3915049+05:30</Created>
+          <Type>SQL</Type>
+          <Server>VINAYAGAR</Server>
+          <UserName>lgnBOB</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
         <ConnectionNode Name="VINAYAGAR:Vinayagar\Maruthi">
           <Created>2016-02-15T09:00:48.2005901+05:30</Created>
           <Type>SQL</Type>
@@ -19,12 +31,6 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
-        <FileNode Name="SQLQuery1.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>SQLQuery1.sql</FullPath>
-        </FileNode>
         <FileNode Name="01.Create_Database_27Jan2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
@@ -49,24 +55,36 @@
           <AssociatedConnUserName />
           <FullPath>71.Logins_Users_03Feb2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="72.Exec sp_configure_07Feb2016.sql">
+        <FileNode Name="72.Logins_Users_22Feb2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>72.Exec sp_configure_07Feb2016.sql</FullPath>
+          <FullPath>72.Logins_Users_22Feb2016.sql</FullPath>
+        </FileNode>
+        <FileNode Name="73.Exec sp_configure_07Feb2016.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>73.Exec sp_configure_07Feb2016.sql</FullPath>
         </FileNode>
         <FileNode Name="91.Exec sys_Objects.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>91.Exec sys_Objects.sql</FullPath>
-        </FileNode>  
+        </FileNode>
         <FileNode Name="92.Exec sys_Links.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>92.Exec sys_Links.sql</FullPath>
-        </FileNode>       
+        </FileNode>
+        <FileNode Name="93.Exec sys_schemas.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>93.Exec sys_schemas.sql</FullPath>
+        </FileNode>
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">

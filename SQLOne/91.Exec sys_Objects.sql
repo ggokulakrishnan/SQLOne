@@ -29,3 +29,67 @@ FROM sys.schemas
 
 --Detatch a database
 sp_detatch_db <<DatabaseName>> 
+
+--	List all the tables that are in database along with their schema details
+SELECT * FROM INFORMATION_SCHEMA.TABLES;
+SELECT * FROM sys.tables;
+Exec sp_msforeachtable 'print ''?'''
+
+-- List all the Objects that are in database
+SELECT * FROM sysobjects
+
+--OP: 
+/* AF: Aggregate function (CLR)
+C: CHECK constraint
+D: Default or DEFAULT constraint
+F: FOREIGN KEY constraint
+L: Log
+FN: Scalar function
+FS: Assembly (CLR) scalar-function
+FT: Assembly (CLR) table-valued function
+IF: In-lined table-function
+IT: Internal table
+P: Stored procedure
+PC: Assembly (CLR) stored-procedure
+PK: PRIMARY KEY constraint (type is K)
+RF: Replication filter stored procedure
+S: System table
+SN: Synonym
+SQ: Service queue
+TA: Assembly (CLR) DML trigger
+TF: Table function
+TR: SQL DML Trigger
+TT: Table type
+U: User table
+UQ: UNIQUE constraint (type is K)
+V: View
+X: Extended stored procedure
+*/
+
+--01. List all LOGIN accounts in SQL Instance
+--S		=> SQL Logins
+--U		=> Windows Login Accounts
+--G		=> Windows GROUP Login Accounts
+
+SELECT		name, type, type_desc, create_date, default_database_name --*
+FROM		sys.server_principals
+WHERE		type IN ('U', 'S', 'G')
+	AND		name NOT LIKE '%##%'
+ORDER BY	name, type_desc
+
+--Display only SQL Login accounts
+SELECT		name, type, type_desc, create_date, default_database_name --*
+FROM		sys.server_principals
+WHERE		type = 'S'
+	AND		name NOT LIKE '%##%'
+ORDER BY	name, type_desc
+
+--Diplay only Windows Login accounts
+SELECT		name, type, type_desc, create_date, default_database_name --*
+FROM		sys.server_principals
+WHERE		type = 'U'
+
+--Display Windows Group Login accounts
+SELECT		name, type, type_desc, create_date, default_database_name --*
+FROM		sys.server_principals
+WHERE		type = 'G'
