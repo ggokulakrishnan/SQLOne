@@ -13,19 +13,87 @@
 
 --03. What are SECURABLES ?
 --		We can secure few of the tables from the user (who as db_owner) role, who will have access other wise
-USE SQLOneSchemaDB;
+
+ 
+USE master;
+GO
+ 
+CREATE DATABASE DEMODBMP10
+ON
+	( NAME			= DEMODBMP10_DATA,
+    FILENAME		= 'D:\Projects\DemoSQL\ADWorks2012OLTPDB\Data\DEMODBMP10Data.mdf',
+    SIZE			= 4,
+    MAXSIZE			= 5,
+    FILEGROWTH		= 5 )
+LOG ON
+	( NAME			= DEMODBMP10_LOG,
+    FILENAME		= 'D:\Projects\DemoSQL\ADWorks2012OLTPDB\Log\DEMODBMP10Log.ldf',
+    SIZE			= 12 MB,
+    MAXSIZE			= 14 MB,
+    FILEGROWTH		= 5 MB );
 GO
 
---	List all the tables that are in database along with their schema details
+-- Create 03 tables in this Database 'DEMODBMP10'
+
+USE DEMODBMP10;
+GO
+
+CREATE TABLE dbo.Products (
+      ProductID INT PRIMARY KEY NOT NULL
+      , ProductName VARCHAR(25) NOT NULL
+      , Price MONEY NULL
+      , ProductDesc TEXT NULL);
+GO
+ 
+SELECT * FROM dbo.Products;
+SELECT * FROM Products;
+ 
+-- Same results for the above 02 SELECT statements
+-- The owner of this 'Products' table is 'dbo'
+
+USE DEMODBMP10;
+GO
+ 
+CREATE TABLE dbo.Employee (
+      EmpID INT PRIMARY KEY CLUSTERED);
+GO   
+ 
+SELECT * FROM dbo.Employee (NoLock);
+SELECT * FROM Employee (NoLock);
+
+-- The owner of this 'Employee' table is 'dbo'
+
+-- Create a new SCHEMA called 'trans' in DEMODBMP10
+USE DEMODBMP10;
+GO
+
+CREATE SCHEMA trans;
+GO
+
+-- Create the table [Transaction] in 'trans' schema
+USE DEMODBMP10;
+GO
+
+CREATE TABLE trans.[Transaction] (
+	TransID		INT
+	, ProductID	INT
+	, FirstName	VARCHAR(50)
+	, LastName	VARCHAR(50)
+	, TransDate	DATETIME
+	, CostInUSD	MONEY);
+GO
+
+
+-- List all the tables that are in database along with their schema details
 SELECT * FROM INFORMATION_SCHEMA.TABLES;
 SELECT * FROM sys.tables;
 Exec sp_msforeachtable 'print ''?'''
 
 --OP:
-/*	TABLE_CATALOG		| TABLE_SCHEMA	| TABLE_NAME	| TABLE_TYPE
-	SQLOneSchemaDB		| dbo			| Products		| BASE TABLE
-	SQLOneSchemaDB		| dbo			| Employee		| BASE TABLE
-	SQLOneSchemaDB		| SalesTrans	| SchTable		| BASE TABLE */
+/*	TABLE_CATALOG	| TABLE_SCHEMA	| TABLE_NAME	| TABLE_TYPE
+	DEMODBMP10		| dbo			| Products		| BASE TABLE
+	DEMODBMP10		| dbo			| Employee		| BASE TABLE
+	DEMODBMP10		| trans			| Transaction	| BASE TABLE */
 
 -- 'Products' table is having 'dbo' schema
 INSERT INTO Products VALUES (1, 'Sandle', 45, 'Sandle Wood Powder');
@@ -35,6 +103,7 @@ SELECT * from dbo.Products;
 --OP:
 /*	ProductID	ProductName	Price	ProductDesc
 	1			Sandle		45.00	Sandle Wood Powder */
+
 EXECUTE AS USER = fooUser
 SELECT * FROM dbo.Products
 REVERT
@@ -137,7 +206,7 @@ FROM		sys.server_principals
 WHERE		type = 'G'
 
 --01. CREATE principles (Alice, Bob, Charles)
-USE DEMODBMP09;
+USE master;
 GO
 
 CREATE LOGIN lgnALICE WITH PASSWORD = 'a1ic3'; 
@@ -170,13 +239,23 @@ GO
 --OP: Command(s) completed successfully.
 
 --03. Adding Charles to Bob's database
+SELECT USER_NAME();
+--OP: dbo
+
+SELECT SUSER_SNAME();
+--OP: Vinayagar\Maruthi
+
 USE BOBDBMP01;
 GO
 
 EXECUTE AS LOGIN = 'lgnBOB';
 GO
 
-CREATE USER usrCHARLES
+SELECT SUSER_SNAME();
+--OP: lgnBOB
+
+CREATE USER usrCHARLES;
+GO
 
 --OP: Command(s) completed successfully.
 
@@ -312,12 +391,12 @@ GO
 --	After the login is created, the login can connect to SQL Server it will not have sufficient permission to 
 --	perform any useful work
 
---01. Now add SQL Server login 'fooLogin' to Database 'SQLOneSchemaDB' as user 'fooUser', this user 'fooUser' can now 
+--01. Now add SQL Server login 'fooLogin' to Database 'DEMODBMP10' as user 'fooUser', this user 'fooUser' can now 
 --		be added to any server role
 
 --Link: https://msdn.microsoft.com/en-IN/library/ms187750.aspx
 
-USE SQLOneSchemaDB;
+USE DEMODBMP10;
 GO
 
 CREATE USER fooUser FOR LOGIN fooLogin;
@@ -480,8 +559,8 @@ GO
 CREATE USER fooUser FOR LOGIN fooLogin;
 GO
 
---01. Change the database context to 'SQLOneSchemaDB'
-USE SQLOneSchemaDB;
+--01. Change the database context to 'DEMODBMP10'
+USE DEMODBMP10;
 GO
 
 PRINT USER_NAME();
@@ -494,9 +573,18 @@ FROM		sys.database_principals
 WHERE		type = 'S'
 
 
+-- Clean up section 
+USE master;
+GO
+
+--01. Drop the databases that were created for Logins_Users.sql
+DROP DATABASE [ALICEDBMP01]
+DROP DATABASE [BOBDBMP01]
+
+USE master;
+GO
+
+--02. Remove SQL logins that were created for Logins_Users.sql
 DROP LOGIN [lgnALICE]
 DROP LOGIN [lgnBOB]
 DROP LOGIN [lgnCHARLES]
-
-DROP DATABASE [ALICEDBMP01]
-DROP DATABASE [BOBDBMP01]
