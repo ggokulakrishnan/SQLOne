@@ -1,5 +1,7 @@
 --Link: http://blogs.msdn.com/b/lcris/archive/2006/10/24/sql-server-2005-demo-for-enabling-database-impersonation-for-cross-database-access.aspx
 
+/* This is a template */
+
 -- A demo for cross database access
 -- 
 -- create our principals: alice, bob, charles
@@ -348,13 +350,14 @@ revert
 --#Cleanup#
 --#########
 
-use master
+use master;
+GO
 
-drop database db_alice
-drop database db_bob
-drop login alice
-drop login bob
-drop login charles
+drop database db_alice;
+drop database db_bob;
+drop login alice;
+drop login bob;
+drop login charles;
 
 --
 -- EOD

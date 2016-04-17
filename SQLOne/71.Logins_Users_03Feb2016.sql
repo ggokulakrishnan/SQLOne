@@ -1,4 +1,4 @@
---										Sri Rama Jaya Rama Jaya Jaya Rama
+										Sri Rama Jaya Rama Jaya Jaya Rama
 
 --01. Creating a new SQL Login
 
@@ -10,31 +10,112 @@
 --		Role is a set of permission that acts like a template, we can assign User to a Role and they get 
 --		the permissions in that Role
 --		User	-->		Role	(User gets all the permissions of that Role)
+--						Role	(In SQL Server permissions are assigned to Roles)
 
 --03. What are SECURABLES ?
 --		We can secure few of the tables from the user (who as db_owner) role, who will have access other wise
-USE SQLOneSchemaDB;
+
+USE [DEMODBMP10];
 GO
 
---	List all the tables that are in database along with their schema details
-SELECT * FROM INFORMATION_SCHEMA.TABLES;
-SELECT * FROM sys.tables;
-Exec sp_msforeachtable 'print ''?'''
+CREATE TABLE dbo.Products (
+      ProductID INT PRIMARY KEY NOT NULL
+      , ProductName VARCHAR(25) NOT NULL
+      , Price MONEY NULL
+      , ProductDesc TEXT NULL);
+GO
+ 
+SELECT * FROM dbo.Products;
 
---OP:
-/*	TABLE_CATALOG		| TABLE_SCHEMA	| TABLE_NAME	| TABLE_TYPE
-	SQLOneSchemaDB		| dbo			| Products		| BASE TABLE
-	SQLOneSchemaDB		| dbo			| Employee		| BASE TABLE
-	SQLOneSchemaDB		| SalesTrans	| SchTable		| BASE TABLE */
-
--- 'Products' table is having 'dbo' schema
-INSERT INTO Products VALUES (1, 'Sandle', 45, 'Sandle Wood Powder');
+INSERT INTO dbo.Products VALUES (1,	'Sandle', 45.00, 'Sandle Wood Powder');
+INSERT INTO dbo.Products VALUES (2,	'Ivory', 55.00, 'Ivory Powder');
+INSERT INTO dbo.Products VALUES (3,	'Saffron', 65.00, 'Saffron Powder');
 
 SELECT * from Products;
 SELECT * from dbo.Products;
 --OP:
 /*	ProductID	ProductName	Price	ProductDesc
-	1			Sandle		45.00	Sandle Wood Powder */
+	1			Sandle		45.00	Sandle Wood Powder 
+	2			Ivory		55.00	Ivory Powder
+	3			Saffron		65.00	Saffron Powder 	*/
+  
+--01. Create table with Primary Key constraint [Using PRIMARY Key Constraint on a Column]
+USE [DEMODBMP10];
+GO
+
+CREATE TABLE dbo.Employee (
+      EmpID INT PRIMARY KEY CLUSTERED);
+GO   
+
+INSERT INTO dbo.Employee VALUES (1);
+INSERT INTO dbo.Employee VALUES (2);
+INSERT INTO dbo.Employee VALUES (3);
+INSERT INTO dbo.Employee VALUES (4);
+
+SELECT * FROM dbo.Employee (NoLock);
+
+/*	EmpID
+	1
+	2
+	3
+	4	*/
+
+/* Create schema [trans] */
+USE [DEMODBMP10]
+GO
+
+CREATE SCHEMA [trans]
+GO
+
+/* Create table [Transaction] in schema [trans] */
+USE [DEMODBMP10]
+GO
+
+CREATE TABLE [trans].[Transaction](
+	[TransID] [int] NULL,
+	[ProductID] [int] NULL,
+	[FirstName] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL,
+	[TransDate] [datetime] NULL,
+	[CostInUSD] [money] NULL
+) ON [PRIMARY]
+
+SELECT * FROM [trans].[Transaction];
+
+--OP: (No Data)
+
+--	List all the tables that are in database along with their schema details
+
+SELECT * FROM INFORMATION_SCHEMA.TABLES;
+SELECT * FROM sys.tables;
+Exec sp_msforeachtable 'print ''?'''
+
+--OP:
+/*	TABLE_CATALOG	| TABLE_SCHEMA	| TABLE_NAME	| TABLE_TYPE
+	DEMODBMP10		| dbo			| Products		| BASE TABLE
+	DEMODBMP10		| dbo			| Employee		| BASE TABLE
+	DEMODBMP10		| trans			| Transaction	| BASE TABLE */
+
+-- Create 03 Server Logins
+USE [DEMODBMP10];
+GO
+
+-- Create three server principles
+
+CREATE LOGIN lgnAlice	WITH PASSWORD = 'hello';
+CREATE LOGIN lgnBob		WITH PASSWORD = 'hello';
+CREATE LOGIN lgnCharles WITH PASSWORD = 'hello';
+
+DROP LOGIN lgnALICE;
+DROP LOGIN lgnBOB;
+DROP LOGIN lgnCHARLES;
+
+--OP: If logins already exist in Database
+--Msg 15025, Level 16, State 1, Line 1
+--The server principal 'lgnAlice' already exists.
+
+--OP: Command(s) completed successfully
+
 EXECUTE AS USER = fooUser
 SELECT * FROM dbo.Products
 REVERT
@@ -136,47 +217,41 @@ SELECT		name, type, type_desc, create_date, default_database_name --*
 FROM		sys.server_principals
 WHERE		type = 'G'
 
+USE [master]
+GO
+
+DROP DATABASE [DEMODBMP09]
+GO
+
 --01. CREATE principles (Alice, Bob, Charles)
-USE DEMODBMP09;
+USE [master];
 GO
 
-CREATE LOGIN lgnALICE WITH PASSWORD = 'a1ic3'; 
-GO
-
-CREATE LOGIN lgnBOB WITH PASSWORD = 'b0b'; 
-GO
-
-CREATE LOGIN lgnCHARLES WITH PASSWORD = 'char13s'; 
-GO
+CREATE LOGIN lALICE WITH PASSWORD = 'a1ic3'; 
+CREATE LOGIN lBOB WITH PASSWORD = 'b0b'; 
+CREATE LOGIN lCHARLES WITH PASSWORD = 'char13s'; 
 
 --OP: Command(s) completed successfully.
 
 --02. CREATE 02 databases owned by ALICE and BOB
 CREATE DATABASE ALICEDBMP01;
-GO
-
 CREATE DATABASE BOBDBMP01;
-GO
 
 --The logins will not be able to access the database 'ALICEDBMP01' and 'BOBDBMP01'
 --OP: The database BOBDBMP01 is not accessible. (ObjectExplorer)
 
-ALTER AUTHORIZATION ON DATABASE::ALICEDBMP01 TO lgnALICE;
-GO
+ALTER AUTHORIZATION ON DATABASE::ALICEDBMP01 TO lALICE;
+ALTER AUTHORIZATION ON DATABASE::BOBDBMP01 TO lBOB;
 
-ALTER AUTHORIZATION ON DATABASE::BOBDBMP01 TO lgnBOB;
-GO
 
 --OP: Command(s) completed successfully.
 
 --03. Adding Charles to Bob's database
-USE BOBDBMP01;
-GO
+USE BOBDBMP01
 
-EXECUTE AS LOGIN = 'lgnBOB';
-GO
+EXECUTE AS LOGIN = 'lBOB'
 
-CREATE USER usrCHARLES
+CREATE USER uCHARLES
 
 --OP: Command(s) completed successfully.
 
@@ -494,9 +569,17 @@ FROM		sys.database_principals
 WHERE		type = 'S'
 
 
-DROP LOGIN [lgnALICE]
-DROP LOGIN [lgnBOB]
-DROP LOGIN [lgnCHARLES]
+/* Cleanup Login and Users */
+USE [master]
+GO
 
 DROP DATABASE [ALICEDBMP01]
 DROP DATABASE [BOBDBMP01]
+
+DROP LOGIN [lgnALICE];
+DROP LOGIN [lgnBOB];
+DROP LOGIN [lgnCHARLES];
+
+
+EXECUTE AS USER = 'dbo';
+SELECT * FROM fn_my_permissions(NULL, '[DEMODBMP06]') 
