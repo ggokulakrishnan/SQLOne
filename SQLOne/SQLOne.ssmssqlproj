@@ -49,6 +49,12 @@
           <AssociatedConnUserName />
           <FullPath>02.Create_Table_08Feb2016.sql</FullPath>
         </FileNode>
+        <FileNode Name="70.Logins_Users_Server_Roles_18Apr2016.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>70.Logins_Users_Server_Roles_18Apr2016.sql</FullPath>
+        </FileNode>
         <FileNode Name="71.Logins_Users_03Feb2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
@@ -67,11 +73,11 @@
           <AssociatedConnUserName />
           <FullPath>73.Logins_Users_Who_Has_Access_17Apr2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="74.Login_User_Mapping.sql">
+        <FileNode Name="74.Login_User_Mapping_17Apr2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>74.Login_User_Mapping.sql</FullPath>
+          <FullPath>74.Login_User_Mapping_17Apr2016.sql</FullPath>
         </FileNode>
         <FileNode Name="75.Exec sp_configure_07Feb2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
