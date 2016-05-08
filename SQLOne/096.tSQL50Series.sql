@@ -107,6 +107,16 @@ name				xtype
 
 --04. Get all the StoredProcedures that are related to a table
 
-SELECT * FROM syscomments sysc (NoLock);
-SELECT * FROM sysobjects syso (NoLock);
+SELECT id, text FROM syscomments sysc (NoLock);
+SELECT id, name, xtype FROM sysobjects syso (NoLock);
 
+--table to identify: [spt_fallback_usg]
+
+SELECT			syso.name, syso.xtype
+FROM			syscomments sysc
+ INNER JOIN		sysobjects syso
+ON				sysc.id = syso.id
+WHERE			sysc.text = '%spt_fallback_usg%'
+ AND			syso.xtype = 'P';
+
+sp_helptext 'sp_addapprole'
