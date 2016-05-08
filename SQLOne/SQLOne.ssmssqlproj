@@ -49,6 +49,12 @@
           <AssociatedConnUserName />
           <FullPath>002.Create_Table_08Feb2016.sql</FullPath>
         </FileNode>
+        <FileNode Name="050.DB_RecoveryPending.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>050.DB_RecoveryPending.sql</FullPath>
+        </FileNode>
         <FileNode Name="070.Logins_Users_Server_Roles_18Apr2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
@@ -120,12 +126,6 @@
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
           <FullPath>096.tSQL50Series.sql</FullPath>
-        </FileNode>
-        <FileNode Name="SQLQuery1.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>SQLQuery1.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>

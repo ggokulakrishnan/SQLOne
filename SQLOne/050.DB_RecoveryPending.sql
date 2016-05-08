@@ -1,6 +1,7 @@
 -- Topic: Database in 'recovery pending' Eg) AdventureWorks2012 (Recovery Pending)
 -- Description: Use trial and error and get down to the solution
 -- Source: https://www.xtivia.com/recovering-recovery-pending-status/
+-- Date: 08-May-2016
 
 --Recovering from 'recovery pending' status
 --01. Seeing a database in any state other than "online" makes me a little nervous
