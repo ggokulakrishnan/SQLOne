@@ -31,83 +31,95 @@
     </LogicalFolder>
     <LogicalFolder Name="Queries" Type="0" Sorted="true">
       <Items>
-        <FileNode Name="01.Create_Database_27Jan2016.sql">
+        <FileNode Name="001.Create_Database_27Jan2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>01.Create_Database_27Jan2016.sql</FullPath>
+          <FullPath>001.Create_Database_27Jan2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="01.Create_Database_DGL_30Jan2016.sql">
+        <FileNode Name="001.Create_Database_DGL_30Jan2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>01.Create_Database_DGL_30Jan2016.sql</FullPath>
+          <FullPath>001.Create_Database_DGL_30Jan2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="02.Create_Table_08Feb2016.sql">
+        <FileNode Name="002.Create_Table_08Feb2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>02.Create_Table_08Feb2016.sql</FullPath>
+          <FullPath>002.Create_Table_08Feb2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="70.Logins_Users_Server_Roles_18Apr2016.sql">
+        <FileNode Name="070.Logins_Users_Server_Roles_18Apr2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>70.Logins_Users_Server_Roles_18Apr2016.sql</FullPath>
+          <FullPath>070.Logins_Users_Server_Roles_18Apr2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="71.Logins_Users_03Feb2016.sql">
+        <FileNode Name="071.Logins_Users_03Feb2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>71.Logins_Users_03Feb2016.sql</FullPath>
+          <FullPath>071.Logins_Users_03Feb2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="72.Logins_Users_22Feb2016.sql">
+        <FileNode Name="072.Logins_Users_22Feb2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>72.Logins_Users_22Feb2016.sql</FullPath>
+          <FullPath>072.Logins_Users_22Feb2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="73.Logins_Users_Who_Has_Access_17Apr2016.sql">
+        <FileNode Name="073.Logins_Users_Who_Has_Access_17Apr2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>73.Logins_Users_Who_Has_Access_17Apr2016.sql</FullPath>
+          <FullPath>073.Logins_Users_Who_Has_Access_17Apr2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="74.Login_User_Mapping_17Apr2016.sql">
+        <FileNode Name="074.Login_User_Mapping_17Apr2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>74.Login_User_Mapping_17Apr2016.sql</FullPath>
+          <FullPath>074.Login_User_Mapping_17Apr2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="75.Exec sp_configure_07Feb2016.sql">
+        <FileNode Name="075.Exec sp_configure_07Feb2016.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>75.Exec sp_configure_07Feb2016.sql</FullPath>
+          <FullPath>075.Exec sp_configure_07Feb2016.sql</FullPath>
         </FileNode>
-        <FileNode Name="91.Exec sys_Objects.sql">
+        <FileNode Name="091.Exec sys_Objects.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>91.Exec sys_Objects.sql</FullPath>
+          <FullPath>091.Exec sys_Objects.sql</FullPath>
         </FileNode>
-        <FileNode Name="92.Exec sys_Links.sql">
+        <FileNode Name="092.Exec sys_Links.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>92.Exec sys_Links.sql</FullPath>
+          <FullPath>092.Exec sys_Links.sql</FullPath>
         </FileNode>
-        <FileNode Name="93.Exec sys_schemas.sql">
+        <FileNode Name="093.Exec sys_schemas.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>93.Exec sys_schemas.sql</FullPath>
+          <FullPath>093.Exec sys_schemas.sql</FullPath>
         </FileNode>
-        <FileNode Name="94.Exec xp_cmdshell.sql">
+        <FileNode Name="094.Exec xp_cmdshell.sql">
           <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
           <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
           <AssociatedConnUserName />
-          <FullPath>94.Exec xp_cmdshell.sql</FullPath>
+          <FullPath>094.Exec xp_cmdshell.sql</FullPath>
+        </FileNode>
+        <FileNode Name="095.SQL CMD mode.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>095.SQL CMD mode.sql</FullPath>
+        </FileNode>
+        <FileNode Name="096.tSQL50Series.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>096.tSQL50Series.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>
