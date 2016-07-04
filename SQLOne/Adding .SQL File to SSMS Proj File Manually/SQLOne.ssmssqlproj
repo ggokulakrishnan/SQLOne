@@ -127,24 +127,6 @@
           <AssociatedConnUserName />
           <FullPath>096.tSQL50Series.sql</FullPath>
         </FileNode>
-		<FileNode Name="100.BackUpRestore.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>100.BackUpRestore.sql</FullPath>
-        </FileNode>
-		<FileNode Name="101.GetAllInfoDB.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>101.GetAllInfoDB.sql</FullPath>
-        </FileNode>
-		<FileNode Name="102.DBRecovyModel.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:VINAYAGAR:True</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>VINAYAGAR</AssociatedConnSrvName>
-          <AssociatedConnUserName />
-          <FullPath>102.DBRecovyModel.sql</FullPath>
-        </FileNode>		
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
